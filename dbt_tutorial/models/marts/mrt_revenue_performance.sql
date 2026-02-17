@@ -6,7 +6,7 @@ with actuals as (
     group by 1
 ),
 targets as (
-    select * from {{ ref('revenue_targets') }}
+    select * from {{ ref('stg_revenue_targets') }}
 )
 
 select
