@@ -1,6 +1,6 @@
 with actuals as (
     select
-        date_trunc('month', order_date) as revenue_month,
+        date_trunc(order_date, month) as revenue_month,
         sum(amount) as actual_amount
     from {{ ref('fct_orders') }}
     group by 1
