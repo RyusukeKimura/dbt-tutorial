@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: jaffle_shop # ソースの論理名
     description: "基幹システムのデータベースからのデータ"
-    database: ryusuke-sandbox # BigQuery Project ID: profiles.ymlの project と一致させます
+    database: ryusuke-sandbox # BigQuery Project ID: profiles.ymlの project と一致させる
     schema: dbt_tutorial      # BigQuery Dataset ID
     tables:
       - name: raw_customers       # BigQuery Table Name
