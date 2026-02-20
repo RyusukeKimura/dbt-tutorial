@@ -32,6 +32,11 @@ models:
       - name: total_order_amount
         description: Total value (AUD) of a customer's orders
 
+      - name: customer_lifetime_value
+        description: customer LTV(life time value)
+        tests:
+          - assert_is_positive
+
   - name: fct_orders
     description: This table has basic information about orders, as well as some derived facts based on payments
 
