@@ -16,15 +16,15 @@ sources:
 
       - name: raw_orders          # BigQuery Table Name
         description: "注文データの生テーブル"
+        loaded_at_field: order_date # 鮮度チェック用の日付カラム
+        freshness:
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 24, period: hour}
         columns:
           - name: id
             tests:
               - unique
               - not_null
-        #loaded_at_field: order_date # 鮮度チェック用の日付カラム
-        #freshness:
-        #  warn_after: {count: 12, period: hour}
-        #  error_after: {count: 24, period: hour}
 
   - name: stripe # 決済システムなど、別ソースの場合は分けるのが一般的
     description: "Stripeからの決済データ"
