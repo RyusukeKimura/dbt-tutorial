@@ -50,6 +50,7 @@ models:
       - name: customer_id
         description: Foreign key to the customers table
         tests:
+          - dbt_utils.not_constant
           - not_null
           - relationships:
               to: ref('customers')
