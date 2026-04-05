@@ -22,33 +22,52 @@ models:
 
       - name: full_name
         description: Customer's full name. PII.
+        tests:
+          - not_null
 
       - name: first_order
         description: Date (UTC) of a customer's first order
+        tests:
+          - not_null
 
       - name: most_recent_order
         description: Date (UTC) of a customer's most recent order
+        tests:
+          - not_null
 
       - name: number_of_orders
         description: Count of the number of orders a customer has placed
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
 
       - name: total_order_amount
         description: Total value (AUD) of a customer's orders
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
 
       - name: customer_lifetime_value
         description: customer LTV(life time value)
         tests:
           - assert_is_positive
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
 
   - name: fct_orders
     description: This table has basic information about orders, as well as some derived facts based on payments
+    tests:
+      - dbt_expectations.expect_table_row_count_to_equal_other_table:
+            compare_model: ref("stg_orders")
+      - dbt_utils.expression_is_true:
+            expression: "amount = credit_card_amount + coupon_amount + bank_transfer_amount + gift_card_amount"
 
     columns:
       - name: order_id
+        description: This is a unique identifier for an order
         tests:
           - unique
           - not_null
-        description: This is a unique identifier for an order
 
       - name: customer_id
         description: Foreign key to the customers table
@@ -56,11 +75,13 @@ models:
           - dbt_utils.not_constant
           - not_null
           - relationships:
-              to: ref('customers')
+              to: ref('dim_customers')
               field: customer_id
 
       - name: order_date
         description: Date (UTC) that the order was placed
+        tests:
+          - not_null
 
       - name: status
         description: '{{ doc("orders_status") }}'
