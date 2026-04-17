@@ -12,7 +12,7 @@ renamed as (
 
     select
       date(month) as month,
-      cast(target_amount as int64) as target_amount,
+      cast(target_amount as int64) as target_amount
     from source
 
 )
