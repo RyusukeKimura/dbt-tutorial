@@ -5,3 +5,8 @@ dbt_env/
 
 # MacOS
 **/.DS_Store
+
+# dbt generated files
+target/
+dbt_packages/
+logs/
